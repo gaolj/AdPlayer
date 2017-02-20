@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+    <span style="font-size:24px;"><style type="text/css">  
+    body{  
+        overflow-x: hidden;  
+        overflow-y: hidden;  
+    }  
+    </style></span>  
+
+<body style="border: 0px; overflow: hidden">
+
+<p>
+Ò»·ùÍ¼Ïñ£º
+<img src="./eg_mouse.jpg" width="128" height="128" />
+</p>
+
+<p>
+Ò»·ù¶¯»­Í¼Ïñ£º
+<img src="./eg_cute.gif" width="50" height="50" />
+</p>
+</body>
+</html>

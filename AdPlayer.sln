@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdPlayer", "AdPlayer\AdPlayer.vcxproj", "{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "AdPlayer\demo\demo.vcxproj", "{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}.Debug|Win32.Build.0 = Debug|Win32
+		{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}.Release|Win32.ActiveCfg = Release|Win32
+		{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}.Release|Win32.Build.0 = Release|Win32
+		{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}.Debug|Win32.Build.0 = Debug|Win32
+		{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}.Release|Win32.ActiveCfg = Release|Win32
+		{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+; AdPlayer.def : 声明 DLL 的模块参数。
+
+LIBRARY
+
+EXPORTS
+    setHwnd @1
