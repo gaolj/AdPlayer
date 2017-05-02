@@ -1,9 +1,14 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdPlayer", "AdPlayer\AdPlayer.vcxproj", "{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "AdPlayer\demo\demo.vcxproj", "{1EEA11EE-E851-47B7-8769-66D9DAC0F14D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD8E3C23-7678-42A6-A3EC-5940C4DD21B5} = {FD8E3C23-7678-42A6-A3EC-5940C4DD21B5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,11 +13,18 @@
 // Filter graph notification to the specified window
 #define WM_GRAPHNOTIFY  (WM_USER+20)
 #define WM_PLAYCOMPLETE (WM_USER+21)
+#include <memory>
+#include <vector>
+#include <streams.h>
+#include "asyncio.h"
+#include "asyncrdr.h"
+#include "memfile.h"
 
 class CDXGraph
 {
 private:
 	//各种DirectShow接口
+	IFilterGraph *		mFilterGraph;
 	IGraphBuilder *     mGraph;  
 	IMediaControl *		mMediaControl;
 	IMediaEventEx *		mEvent;
@@ -31,6 +38,8 @@ private:
 	HWND mDisplayHwnd;
 	HWND mNotifyHwnd;
 
+	CMemStream *		mMemStream;
+	CMemReader *		mMemReader;
 public:
 	CDXGraph();
 	virtual ~CDXGraph();
@@ -79,6 +88,8 @@ public:
 	long GetAudioBalance(void);
 
 	bool RenderFile(const char * inFile);
+	bool RenderMem(std::shared_ptr<std::vector<char>> pbMem);
+	bool RenderMem(unsigned char* pbMem, long size);
 	//bool SnapshotBitmap(const char * outFile);
 
 private:

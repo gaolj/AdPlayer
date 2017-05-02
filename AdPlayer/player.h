@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 #include <cstdint>
-#include <boost/thread.hpp>
+#include <thread>
+#include <memory>
 
 #ifdef PLAYER_EXPORTS
 #define DLL_PLAY_API __declspec(dllexport)
@@ -63,6 +64,6 @@ private:
 	std::string _adFile;														// 广告文件
 	HHOOK _mouseHook;															// 鼠标勾子 用以截获视频界面播放时点击消息
 
-	boost::shared_ptr<CDXGraph> _sharedPlayPtr;									// 播放器对象
+	std::shared_ptr<CDXGraph> _sharedPlayPtr;									// 播放器对象
 	/*boost::shared_ptr<CDialogNotice>*/CDialogNotice* _dlgNotice;								// 用以接收播放结束通知的，广告弹出的消息 （利用其UI线程）
 };

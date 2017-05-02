@@ -48,6 +48,12 @@
     <ClCompile Include="DialogNotice.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="asyncio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="asyncrdr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdPlayer.h">
@@ -78,6 +84,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DialogNotice.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="memfile.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

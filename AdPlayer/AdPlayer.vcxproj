@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -21,6 +21,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -28,6 +29,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -41,8 +43,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\SDK\boost_1_57_0;D:\SDK\Dx90b\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SDK\boost_1_57_0\stage\lib;D:\SDK\Dx90b\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\dx90bsdk\Include;..\..\dx90bsdk\Samples\C++\DirectShow\BaseClasses;..\..\dx90bsdk\Samples\C++\DirectShow\Filters\Async\Include;..\..\dx90bsdk\Samples\C++\DirectShow\Filters\Async\Filter;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,12 +57,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;PLAYER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\dx90bsdk\Include;..\..\dx90bsdk\Samples\C++\DirectShow\BaseClasses;..\..\dx90bsdk\Samples\C++\DirectShow\Filters\Async\Include;..\..\dx90bsdk\Samples\C++\DirectShow\Filters\Async\Filter</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4430</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>.\AdPlayer.def</ModuleDefinitionFile>
       <AdditionalDependencies>strmbasd.lib;uuid.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\dx90bsdk\Lib</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -106,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdPlayer.cpp" />
+    <ClCompile Include="asyncio.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="asyncrdr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="CDXGraph.cpp" />
     <ClCompile Include="DialogAD.cpp" />
     <ClCompile Include="DialogDemo.cpp" />
@@ -124,6 +135,7 @@
     <ClInclude Include="DialogDemo.h" />
     <ClInclude Include="DialogNotice.h" />
     <ClInclude Include="explorer1.h" />
+    <ClInclude Include="memfile.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />

@@ -12,6 +12,7 @@
 #include <sstream>
 #include <cstdint>
 #include "CDXGraph.h"
+int (WINAPIV * __vsnprintf)(char *, size_t, const char*, va_list) = _vsnprintf;
 
 
 #ifdef _DEBUG
@@ -32,6 +33,8 @@ CDXGraph::CDXGraph()
 	mSeeking      = NULL;
 
 	mObjectTableEntry = 0;
+	mMemStream = NULL;
+	mMemReader = NULL;
 }
 
 CDXGraph::~CDXGraph()
@@ -60,6 +63,7 @@ bool CDXGraph::QueryInterfaces(void)
 	if (mGraph)
 	{
 		HRESULT hr = NOERROR;
+		hr |= mGraph->QueryInterface(IID_IFilterGraph, (void **)&mFilterGraph);
 		hr |= mGraph->QueryInterface(IID_IMediaControl, (void **)&mMediaControl);
 		hr |= mGraph->QueryInterface(IID_IMediaEventEx, (void **)&mEvent);
 		hr |= mGraph->QueryInterface(IID_IBasicVideo, (void **)&mBasicVideo);
@@ -499,6 +503,59 @@ long CDXGraph::GetAudioBalance(void)
 	return balance;
 }
 
+bool CDXGraph::RenderMem(unsigned char* pbMem, long size)
+{
+	if (mGraph)
+	{
+		mMemStream = new CMemStream((unsigned char*)pbMem, size, INFINITE);
+		CMediaType mt;
+		mt.majortype = MEDIATYPE_Video;	//  MEDIATYPE_Stream;
+		mt.subtype = MEDIASUBTYPE_Avi;	// MEDIASUBTYPE_Avi
+		HRESULT hr = S_OK;
+
+		if (mMemReader)
+		{
+			mMemReader->Release();
+			mFilterGraph->RemoveFilter(mMemReader);
+		}
+		mMemReader = new CMemReader(mMemStream, &mt, &hr);
+		if (FAILED(hr) || mMemReader == NULL)
+		{
+			return false;
+		}
+		mMemReader->AddRef();
+
+		if (FAILED(mFilterGraph->AddFilter(mMemReader, NULL)))
+			return false;
+
+		if (SUCCEEDED(mGraph->Render(mMemReader->GetPin(0))))
+			return true;
+	}
+	return false;
+}
+
+bool CDXGraph::RenderMem(std::shared_ptr<std::vector<char>> pbMem)
+{
+	if (mGraph)
+	{
+		CMemStream Stream((unsigned char*)pbMem->data(), pbMem->size(), INFINITE);
+		CMediaType mt;
+		mt.majortype = MEDIATYPE_Stream;
+		mt.subtype = MEDIASUBTYPE_Avi;
+		HRESULT hr = S_OK;
+		CMemReader *rdr = new CMemReader(&Stream, &mt, &hr);
+		if (FAILED(hr) || rdr == NULL)
+		{
+			return false;
+		}
+		rdr->AddRef();
+
+		if (SUCCEEDED(mGraph->AddFilter(rdr, NULL)))
+			return true;
+	}
+	return false;
+}
+
 bool CDXGraph::RenderFile(const char * inFile)
 {
 	if (mGraph)
@@ -563,7 +620,7 @@ void CDXGraph::AddToObjectTable(void)
     if (SUCCEEDED(GetRunningObjectTable(0, &objectTable))) 
 	{
 		WCHAR wsz[256];
-		wsprintfW(wsz, L"FilterGraph %08p pid %08x", (DWORD_PTR)mGraph, GetCurrentProcessId());
+		swprintf(wsz, L"FilterGraph %08p pid %08x", (DWORD_PTR)mGraph, GetCurrentProcessId());
 		HRESULT hr = CreateItemMoniker(L"!", wsz, &pMoniker);
 		if (SUCCEEDED(hr)) 
 		{

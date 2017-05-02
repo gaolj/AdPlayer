@@ -9,17 +9,16 @@
 #include "DialogDemo.h"
 #include "DialogNotice.h"
 
-
-#include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
-#include <boost/thread/mutex.hpp>
+#include <memory>
+#include <thread>
+#include <fstream>
 
 // º¯Êýµ¼³ö
 DLL_PLAY_API void  WINAPI setHwnd(HWND hwnd)
 {
 	auto play = CPlayer::Instance();
 	play->setPlayHwnd(hwnd);
-	play->setPlayFile("E:\\c++\\Player\\Debug\\test.avi");
+	play->setPlayFile("test.avi");
 	play->play();
 }
 
@@ -151,7 +150,25 @@ bool CPlayer::play()
 	{
 		_sharedPlayPtr->Stop();
 
-		if(!_sharedPlayPtr->RenderFile(_playFile.c_str())) { _sharedPlayPtr.reset(); return false; }
+		PBYTE pbMem;
+		//std::shared_ptr<std::vector<char>> pbMem;
+		LONGLONG uliSize = 0;
+		std::ifstream is(_playFile, std::ofstream::binary);
+		if (is) {
+			is.seekg(0, is.end);
+			uliSize = is.tellg();
+			is.seekg(0, is.beg);
+
+			//pbMem = std::make_shared<std::vector<char>>(uliSize);
+			pbMem = new BYTE[uliSize];
+			is.read((char*)pbMem, uliSize);
+			//is.read(pbMem->data(), uliSize);
+			is.close();
+		}
+
+		if (!_sharedPlayPtr->RenderMem(pbMem, uliSize)) { _sharedPlayPtr.reset(); return false; }
+		//if (!_sharedPlayPtr->RenderMem(pbMem)) { _sharedPlayPtr.reset(); return false; }
+		//if(!_sharedPlayPtr->RenderFile(_playFile.c_str())) { _sharedPlayPtr.reset(); return false; }
 		if(!_sharedPlayPtr->SetDisplayWindow(_playerHwnd)) { _sharedPlayPtr.reset(); return false; }
 		if(!_sharedPlayPtr->SetNotifyWindow(_dlgNotice->m_hWnd)) { _sharedPlayPtr.reset(); return false; }
 		if(!_sharedPlayPtr->Run()) { _sharedPlayPtr.reset(); return false; }
